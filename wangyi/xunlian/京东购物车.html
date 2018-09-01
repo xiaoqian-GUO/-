@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>京东购物车</title>
+</head>
+<body>
+    <table id="jsTrolley">
+        <thead><tr><th>名称</th><th>价格</th><th>操作</th></tr></thead>
+        <tbody>
+            <tr><td>产品1</td><td>10.00</td><td><a href="javascript:void(0);">删除</a></td></tr>
+            <tr><td>产品2</td><td>30.20</td><td><a href="javascript:void(0);">删除</a></td></tr>
+            <tr><td>产品3</td><td>20.50</td><td><a href="javascript:void(0);">删除</a></td></tr>
+        </tbody>
+        <tfoot><tr><th>总计</th><td colspan="2">60.70(3件商品)</td></tr></tfoot>
+    </table>
+    <script>
+       var arr=[
+           {name:'first',price:100},
+           {name:'second',price:200},
+           {name:"third",price:300},
+       ];
+       function add(arr) {
+            var ele=document.getElementById('jsTrolley');
+            var tbody=ele.children[1];
+            var tfoot=ele.children[2];
+            var len=arr.length;
+            var totalEle=tfoot.children[0].children[1];
+            var currentPrice=totalEle.innerHTML;
+            currentPrice=parseFloat(currentPrice);
+            totalRows=len+tbody.children.length;
+            for(var i=0;i<len;i++){
+                var tr=document.createElement('tr');
+                var td1=document.createElement('td');
+                td1.innerHTML=arr[i]['name'];
+                var td2=document.createElement('td');
+                td2.innerHTML=arr[i]['price'];
+                var td3=document.createElement('td');
+                td3.innerHTML='<a href="javascript:void(0);">删除</a>';
+                currentPrice+=arr[i]["price"];
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                tr.appendChild(td3);
+                tbody.appendChild(tr);
+            }
+            totalEle.innerHTML=currentPrice+"("+totalRows+"件商品)";
+        }
+
+        function bind() {
+            var ele=document.getElementById('jsTrolley');
+            var tbody=ele.children[1];
+            var tfoot=ele.children[2];
+            tbody.addEventListener('click',function(e){
+                var e=e || window.event;
+                var target=e.target || e.srcElement;
+                if(target.nodeName.toLowerCase()=="a"){
+                    var del=target.parentNode.parentNode;
+                    tbody.removeChild(del);
+                    var sib=target.parentNode.previousSibling.innerHTML;
+                    var totalEle=tfoot.children[0].children[1];
+                    var currentPrice=totalEle.innerHTML;
+                    currentPrice=(parseFloat(currentPrice)-parseInt(sib)).toFixed(2);
+                    totalRows=tbody.children.length;
+                    tfoot.children[0].children[1].innerHTML=currentPrice+"("+totalRows+"件商品)";
+                }
+            },false);
+        }
+        // document.body.onclick=function(){
+        //     add(arr);
+        // }
+        add(arr);
+        bind();
+    </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>a标签垂直居中</title>
+</head>
+<body>
+    <div style="text-align:center;height:100px;display:flex;justify-content:center;align-items:center;">
+        <a style="background:pink;" href="www.baidu.com">单击链接</a>
+    </div>
+    <div style="text-align:center;height:100px;display:flex;justify-content:center;align-items:center;">
+            <a style="background:pink;" href="www.baidu.com">单击链接</a>
+        </div>
+    <p id="des"></p>
+    <p id="aes"></p>
+</body>
+<script>
+    var count=0;
+    var count2=0;
+    document.getElementsByTagName('div')[0].addEventListener('mouseover',function(){
+        count++;
+        document.getElementById("des").innerHTML="被触发mouseover事件"+count;
+    },false);
+    document.getElementsByTagName('div')[1].addEventListener('mouseenter',function(){
+        count2++;
+        document.getElementById("aes").innerHTML="被触发mouseenter事件"+count2;
+    },false);
+</script>
+</html>
